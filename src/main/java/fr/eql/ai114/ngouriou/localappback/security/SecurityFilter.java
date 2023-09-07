@@ -1,6 +1,6 @@
 package fr.eql.ai114.ngouriou.localappback.security;
 
-import fr.eql.akatz.cats.club.back.spring.service.SecurityService;
+import fr.eql.ai114.ngouriou.localappback.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
