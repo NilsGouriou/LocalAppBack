@@ -49,10 +49,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
             .antMatchers("/**/*.js").permitAll()
             .antMatchers("/**/*.jpg").permitAll()
             .antMatchers("/api/security/**").permitAll()
-            .antMatchers("/api/glossary/**").permitAll()
+            .antMatchers("/api/glossary/**").permitAll();
 
             // Our private endpoints
-            .anyRequest().authenticated();
+            //.anyRequest().authenticated();
 
         http
             .addFilterBefore(securityFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -28,6 +28,14 @@ public class User implements UserDetails {
     private String login;
     @JsonIgnore
     private String password;
+
+    @OneToMany
+    private List<Message> messages;
+
+    @OneToMany
+    private List<Post> posts;
+
+
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private final List<Pet> pets = new ArrayList<>();
@@ -43,9 +51,6 @@ public class User implements UserDetails {
     public String getSurname() {
         return surname;
     }
-//    public List<Pet> getPets() {
-//        return pets;
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

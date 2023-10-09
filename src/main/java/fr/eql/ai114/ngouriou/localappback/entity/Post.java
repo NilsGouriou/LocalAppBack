@@ -6,14 +6,19 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Message {
+public class Post {
 
     @Id
-    private long messageId;
+    private long postId;
+    private String title;
     private String body;
+
+    @ManyToOne
+    private User author;
 }

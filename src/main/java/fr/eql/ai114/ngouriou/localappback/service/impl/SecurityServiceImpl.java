@@ -1,9 +1,5 @@
 package fr.eql.ai114.ngouriou.localappback.service.impl;
 
-//import fr.eql.akatz.cats.club.back.spring.entity.Owner;
-//import fr.eql.akatz.cats.club.back.spring.exception.AccountExistsException;
-//import fr.eql.akatz.cats.club.back.spring.repository.OwnerDao;
-//import fr.eql.akatz.cats.club.back.spring.service.SecurityService;
 import fr.eql.ai114.ngouriou.localappback.exception.AccountExistsException;
 import fr.eql.ai114.ngouriou.localappback.repository.UserDao;
 import fr.eql.ai114.ngouriou.localappback.service.SecurityService;
@@ -31,7 +27,7 @@ import java.util.Date;
 @Configuration
 public class SecurityServiceImpl implements SecurityService {
 
-    private UserDao ownerDao;
+    private UserDao userDao;
 	private AuthenticationManager authenticationManager;
 
     @Bean
@@ -47,27 +43,27 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = ownerDao.findByLogin(username);
+        User user = userDao.findByLogin(username);
         if (user == null) {
-            throw new UsernameNotFoundException("The owner could not be found");
+            throw new UsernameNotFoundException("The user could not be found");
         }
         return user;
     }
 
     // Used for registration
     public User save(String username, String password) throws AccountExistsException {
-        if (ownerDao.findByLogin(username) != null) {
+        if (userDao.findByLogin(username) != null) {
             throw new AccountExistsException();
         }
         User user = new User();
         user.setLogin(username);
         user.setPassword(passwordEncoder().encode(password));
-		ownerDao.save(user);
+		userDao.save(user);
         return user;
     }
 
     // Used for authentication
-    public User getOwnerFromJsonWebToken(String token) {
+    public User getUserFromJsonWebToken(String token) {
         String username = getUsernameFromToken(token);
         return (User) loadUserByUsername(username);
     }
@@ -78,7 +74,7 @@ public class SecurityServiceImpl implements SecurityService {
         return claims.getSubject();
     }
 
-    public String generateJsonWebTokenForOwner(User user) {
+    public String generateJsonWebTokenForUser(User user) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + 3600 * 1000);
         return Jwts.builder().setSubject(user.getUsername()).setIssuedAt(now).setExpiration(expiryDate)
@@ -93,8 +89,8 @@ public class SecurityServiceImpl implements SecurityService {
 
     /// Setters ///
     @Autowired
-    public void setOwnerDao(UserDao userDao) {
-        this.ownerDao = userDao;
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
     @Autowired
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {

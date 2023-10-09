@@ -23,7 +23,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
         try {
             String token = extractTokenFromHeader(request);
-            UserDetails user = securityService.getOwnerFromJsonWebToken(token);
+            UserDetails user = securityService.getUserFromJsonWebToken(token);
             setPrincipalInSecurityContext(user);
         } catch (Exception e) {
             logger.info("Trying parse token but failed");

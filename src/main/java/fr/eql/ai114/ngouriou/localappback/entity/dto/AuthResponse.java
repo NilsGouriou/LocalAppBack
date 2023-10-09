@@ -4,16 +4,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class AuthResponse {
 
-	private UserDetails owner;
+	private UserDetails user;
 	private String token;
 
-    public AuthResponse(UserDetails owner, String token) {
-        this.owner = owner;
+    public AuthResponse(UserDetails user, String token) {
+        this.user = user;
         this.token = token;
     }
 
-	public UserDetails getOwner() {
-		return owner;
+	public UserDetails getUser() {
+		return user;
 	}
 	public String getToken() {
 		return token;
